@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                         match = false;
                     }
                 }
-                if (!etContent.getText().toString().isEmpty() && match == false){
+                if (!etContent.getText().toString().isEmpty() || match == false){
                     db.insertNote(content,selected);
                     Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
                 } else {
