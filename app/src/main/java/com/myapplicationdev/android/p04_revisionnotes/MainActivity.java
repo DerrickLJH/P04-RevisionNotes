@@ -10,6 +10,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText etContent;
@@ -34,9 +36,25 @@ public class MainActivity extends AppCompatActivity {
                 RadioButton rbSelected = findViewById(selectedStar);
                 int selected = Integer.parseInt(rbSelected.getText().toString());
                 String content = etContent.getText().toString();
-                db.insertNote(content,selected);
+
+                ArrayList<String> nodeContent = db.getNoteContent();
+                Boolean match = false;
+                for (int i = 0; i < nodeContent.size(); i++ ){
+                    if (nodeContent.get(i).equals(etContent.getText().toString())){
+                        match = true;
+
+                    }else{
+                        match = false;
+                    }
+                }
+                if (!etContent.getText().toString().isEmpty() && match == false){
+                    db.insertNote(content,selected);
+                    Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
+                } else {
+
+                    Toast.makeText(MainActivity.this, "Failed to Insert", Toast.LENGTH_LONG).show();
+                }
                 db.close();
-                Toast.makeText(MainActivity.this, "Inserted", Toast.LENGTH_LONG).show();
             }
         });
 
